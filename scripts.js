@@ -74,7 +74,7 @@ const DOM = {
     innerHTMLTransaction(transaction) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
-        const amount = Utils.fomratCurrency(transaction.amount)
+        const amount = Utils.formatCurrency(transaction.amount)
 
         const html = `
         <td class="description">${transaction.description}</td>
@@ -88,9 +88,9 @@ const DOM = {
         return html
     },
     updateBalance() {
-        document.getElementById('incomeDisplay').innerHTML = Utils.fomratCurrency(Transactions.incomes())
-        document.getElementById('expenseDisplay').innerHTML = Utils.fomratCurrency(Transactions.expenses())
-        document.getElementById('totalDisplay').innerHTML = Utils.fomratCurrency(Transactions.total())
+        document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transactions.incomes())
+        document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transactions.expenses())
+        document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transactions.total())
     },
     clearTransactions() {
         DOM.transactionsContainer.innerHTML = "";
@@ -98,7 +98,7 @@ const DOM = {
 }
 
 const Utils = {
-    fomratCurrency(value){
+    formatCurrency(value){
         const signal = Number(value) < 0 ? "-" : ""
         value = String(value).replace(/\D/g, "")
         value = Number(value) / 100
@@ -107,6 +107,13 @@ const Utils = {
             currency: "BRL"
         })
         return (signal + value)
+    },
+    formatAmount(value){
+        value = Number(value) * 100
+        return value
+    },
+    formatDate(date){
+
     }
 }
 
@@ -140,12 +147,26 @@ const Form = {
         }
     },
     validateFields() {
-        console.log(Form.getValues())
+        const { description, amount, date } = Form.getValues()
+        if(description.trim() == "" || amount.trim() == "" || date.trim() == "") {
+            throw new Error("Por favor, preencha todos os campos.")
+        }
+    },
+    formatValues() {
+        let { description, amount, date } = Form.getValues()
+        amount = Utils.formatAmount(amount)
+        date = Utils.formatDate(date)
     },
     submit(event) {
         event.preventDefault()
-        Form.validateFields()
-        //Form.formatData()
+        try {
+            Form.validateFields()
+            Form.formatValues()
+            Form.getValues()
+        } catch (error) {
+            alert(error.message)
+        }
+
     }
 }
 
