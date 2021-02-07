@@ -113,7 +113,8 @@ const Utils = {
         return value
     },
     formatDate(date){
-
+        const splittedDate = date.split("-")
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
     }
 }
 
@@ -140,7 +141,7 @@ const Form = {
     },
     getValues(){
         return{
-            type: Form.getType(),
+            type: Form.type.value,
             description: Form.description.value,
             amount: Form.amount.value,
             date: Form.date.value,
@@ -153,16 +154,32 @@ const Form = {
         }
     },
     formatValues() {
-        let { description, amount, date } = Form.getValues()
+        let { type, description, amount, date } = Form.getValues()
         amount = Utils.formatAmount(amount)
         date = Utils.formatDate(date)
+        return {
+            type,
+            description,
+            amount,
+            date
+        }
     },
+    clearFields(){
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
+    },
+
     submit(event) {
         event.preventDefault()
         try {
             Form.validateFields()
-            Form.formatValues()
-            Form.getValues()
+            const transaction = Form.formatValues()
+            Transactions.add(transaction)
+            console.log(Form.formatValues())
+            Form.clearFields()
+            Modal.checkModal()
+            
         } catch (error) {
             alert(error.message)
         }
