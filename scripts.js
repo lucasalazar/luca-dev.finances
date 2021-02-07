@@ -12,19 +12,19 @@ const Modal = {
 const Transactions = {
     all : [
         {
-            type: 'Casa',
+            type: 'Extra',
             description: 'Luz',
             amount: -50000,
             date: '30/01/2021'
         },
         {
-            type: 'laptop',
+            type: 'Trabalho',
             description: 'Venda de site',
             amount: 500000,
             date: '30/01/2021'
         },
         {
-            type: 'lazer',
+            type: 'Alimentação',
             description: 'Internet',
             amount: -12000,
             date: '30/01/2021'
@@ -79,7 +79,7 @@ const DOM = {
         const html = `
         <td class="description">${transaction.description}</td>
         <td class="${CSSclass}">${amount}</td>
-        <td class="type"><i class="small material-icons">${Form.getType()}</i></td>
+        <td class="type"><i class="small material-icons">${Form.getType(transaction.type)}</i></td>
         <td class="date">${transaction.date}</td>
         <td>
             <img src="./assets/minus.svg" alt="Remover transação">
@@ -115,20 +115,20 @@ const Form = {
     description: document.querySelector('input#description'),
     amount: document.querySelector('input#amount'),
     date: document.querySelector('input#date'),
-    getType(){
-        switch (Form.type.value) {
-            case 'casa':
+    getType(type){
+        switch (type) {
+            case 'Casa':
                 return 'home'
-            case 'trabalho':
+            case 'Trabalho':
                 return 'laptop'
-            case 'alimentacao':
-                return 'local_pizza'
-            case 'lazer':
+            case 'Alimentação':
+                return 'cake'
+            case 'Lazer':
                 return 'beach_access'
-            case 'extra':
+            case 'Extra':
                 return 'local_offer'
             default: 
-                return 'laptop'
+                return 'home'
         }
     },
     getValues(){
