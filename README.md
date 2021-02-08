@@ -85,9 +85,6 @@ Javascript
 
 ---
 
-## 📝 Licença
-
-Este projeto esta sobe a licença [MIT](./LICENSE).
 
 Feito com ❤️ por Luca Salazar 👋🏽 [Entre em contato!](https://www.linkedin.com/in/luca-salazar-6b75b817a/)
 
