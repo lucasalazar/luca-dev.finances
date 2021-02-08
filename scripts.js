@@ -9,27 +9,17 @@ const Modal = {
     }
 }
 
+const Storage = {
+    get() {
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
+    },
+    set(transactions) {
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+    },
+}
+
 const Transactions = {
-    all : [
-        {
-            type: 'Extra',
-            description: 'Luz',
-            amount: -50000,
-            date: '30/01/2021'
-        },
-        {
-            type: 'Trabalho',
-            description: 'Venda de site',
-            amount: 500000,
-            date: '30/01/2021'
-        },
-        {
-            type: 'Alimentação',
-            description: 'Internet',
-            amount: -12000,
-            date: '30/01/2021'
-        },
-    ],
+    all : Storage.get(),
 
     add(transaction){
         Transactions.all.push(transaction);
@@ -67,11 +57,12 @@ const DOM = {
 
     addTransaction(transaction, index) {
         const tr = document.createElement('tr')
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
+        tr.dataset.index = index
 
         DOM.transactionsContainer.appendChild(tr)
     },
-    innerHTMLTransaction(transaction) {
+    innerHTMLTransaction(transaction, index) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
         const amount = Utils.formatCurrency(transaction.amount)
@@ -82,7 +73,7 @@ const DOM = {
         <td class="type"><i class="small material-icons">${Form.getType(transaction.type)}</i></td>
         <td class="date">${transaction.date}</td>
         <td>
-            <img src="./assets/minus.svg" alt="Remover transação">
+            <img onclick="Transactions.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
         </td>
         `
         return html
@@ -176,7 +167,6 @@ const Form = {
             Form.validateFields()
             const transaction = Form.formatValues()
             Transactions.add(transaction)
-            console.log(Form.formatValues())
             Form.clearFields()
             Modal.checkModal()
             
@@ -189,11 +179,10 @@ const Form = {
 
 const App = {
     init(){
-        Transactions.all.forEach(transaction => {
-            DOM.addTransaction(transaction)
-        })
+        Transactions.all.forEach(DOM.addTransaction)
         
         DOM.updateBalance();
+        Storage.set(Transactions.all)
     },
     reload(){
         DOM.clearTransactions();
