@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-      <a href="https://luca-dev-finances.lucasalazar.vercel.app/#" target="_blank" alt="site do devfinances"> Luca dev.finance$ </a>
+      <a href="https://luca-dev-finances.lucasalazar.vercel.app/#" alt="site do devfinances" target="_blank"> Luca dev.finance$ </a>
 </h1>
 
 <h3 align="center">
