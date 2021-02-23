@@ -80,13 +80,3 @@ Javascript
  <br />
  <sub><b>Luca Salazar</b></sub></a> <a href="https://www.linkedin.com/in/luca-salazar-6b75b817a/" title="Linkedin">🚀</a>
  <br />
-
-
-
----
-
-
-Feito com ❤️ por Luca Salazar 👋🏽 [Entre em contato!](https://www.linkedin.com/in/luca-salazar-6b75b817a/)
-
----
-
